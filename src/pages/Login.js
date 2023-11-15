@@ -88,7 +88,7 @@ const handleRegister = async (e)=>{
     else{
         try {
             
-     const resp = await axios.post("http://localhost:8000/api/users/register",{
+     const resp = await axios.post(`${baseUrl}/api/users/register`,{
         username:registerForm.username,
         email:registerForm.email,
         password:registerForm.password

@@ -3,7 +3,8 @@ import {
     MDBInput,
     MDBCol,
     MDBRow,
-    MDBBtn
+    MDBBtn,
+    MDBSpinner
   } from 'mdb-react-ui-kit';
   import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -11,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { baseUrl } from '../assets/constants';
 const Login = () => {
 const [toggle, setToggle] = useState('register');
-
+const [loading, setLoading] = useState(false);
 const [loginForm, setLoginForm] = useState({
     email:'',
     password:'',
@@ -38,10 +39,11 @@ setToggle(toggle==='register'?'login':'register')
 
 const handleLogin = async (e) =>{
 e.preventDefault()
-
+setLoading(true);
 if (!loginForm.email || !loginForm.password) {
   
   toast.warning("Email or password is missing ")
+  setLoading(false);
 }
 else{
 
@@ -54,13 +56,17 @@ else{
     })   
     toast.success(resp.data.message);
     localStorage.setItem('users', JSON.stringify({ userId: resp.data.userId, email: resp.data.email, username: resp.data.username ,token:resp.data.token}));
+
+    setLoading(false);
     navigate('/')
   } catch (error) {
     if (error.response.status === 401) {
       toast.warning(error.response.data.message)  
+      setLoading(false);
     }
     else{
       toast.warning(error.data.message)  
+      setLoading(false);
       
 }
   }
@@ -68,13 +74,15 @@ else{
 }
 
 const handleRegister = async (e)=>{
+  setLoading(true);
   e.preventDefault()
   if (!registerForm.username || ! registerForm.password || !registerForm.email || ! registerForm.Cpassword) {
     toast.warning("please fill all the details")
-    
+    setLoading(false);
   }
-    else if (registerForm.password !== registerForm.Cpassword) {
-        toast.warning("password and confirm password do not match")
+  else if (registerForm.password !== registerForm.Cpassword) {
+    toast.warning("password and confirm password do not match")
+    setLoading(false);
         
     }
     else{
@@ -126,7 +134,13 @@ const handleRegister = async (e)=>{
       </MDBRow>
 
       <MDBBtn onClick={handleLogin} block>
-        Log in 
+      {loading ? (
+                <MDBSpinner  role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </MDBSpinner>
+              ) : (
+                "Log in "
+              )}
       </MDBBtn>
     </form>
     </>:

@@ -1,1 +1,1 @@
-exports.baseUrl = 'http://localhost:8000'
+exports.baseUrl = 'https://cromax-link-shortner.onrender.com'

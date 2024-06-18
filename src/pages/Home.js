@@ -95,7 +95,7 @@ const Home = () => {
           <strong>Note :</strong> If you want to know more about the link like
           how many people have visited your link etc . Then please login or
           signup . We have a lot more interesting things that will bring the
-          ease in your life . <br /> <b>By- Ayush Gautam (Developer)</b>
+          ease in your life . 
         </div>
       </div>
     </div>
